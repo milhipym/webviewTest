@@ -11,12 +11,14 @@ export default async function GrowthPage() {
   const measurements = await getGrowth(baby.id);
 
   return (
-    <>
-      <header className="sticky top-0 z-20 border-b border-border bg-background/95 px-4 py-3 safe-top">
-        <h1 className="text-lg font-semibold">성장 곡선</h1>
-        <p className="text-xs text-muted-foreground">{baby.name}</p>
+    <div className="min-h-dvh bg-mesh pb-28">
+      <header className="sticky top-0 z-20 glass border-b border-border/50 safe-top">
+        <div className="px-5 py-4">
+          <h1 className="text-xl font-extrabold tracking-tight">성장 곡선</h1>
+          <p className="text-xs text-muted-foreground">📏 {baby.name}의 성장 기록</p>
+        </div>
       </header>
-      <div className="px-4 py-3">
+      <div className="px-4 py-4">
         <Tabs defaultValue="weight">
           <TabsList>
             <TabsTrigger value="weight">몸무게</TabsTrigger>
@@ -49,11 +51,15 @@ export default async function GrowthPage() {
           </TabsContent>
         </Tabs>
         {measurements.length === 0 && (
-          <p className="mt-4 rounded-lg border border-dashed border-border p-4 text-center text-sm text-muted-foreground">
-            아직 성장 기록이 없어요. 오른쪽 아래 + 버튼에서 "성장"을 눌러 기록하세요.
-          </p>
+          <div className="mt-4 rounded-2xl bg-card p-6 text-center shadow-card">
+            <div className="text-4xl">🌱</div>
+            <p className="mt-2 text-sm font-semibold">아직 성장 기록이 없어요</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              + 버튼에서 &quot;성장&quot;을 눌러 첫 기록을 남겨보세요
+            </p>
+          </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

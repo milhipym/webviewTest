@@ -16,26 +16,30 @@ const tabs = [
 export function BottomNav() {
   const pathname = usePathname();
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-background/95 backdrop-blur safe-bottom">
-      <ul className="mx-auto flex max-w-md">
-        {tabs.map(({ href, label, Icon, match }) => {
-          const active = match(pathname);
-          return (
-            <li key={href} className="flex-1">
-              <Link
-                href={href}
-                className={cn(
-                  "flex flex-col items-center justify-center gap-0.5 py-2 text-xs",
-                  active ? "text-primary" : "text-muted-foreground",
-                )}
-              >
-                <Icon className="h-5 w-5" />
-                <span>{label}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+    <nav className="pointer-events-none fixed inset-x-0 bottom-0 z-30 safe-bottom">
+      <div className="pointer-events-auto mx-auto mb-2 max-w-md px-3">
+        <ul className="flex gap-0.5 rounded-full bg-card/85 p-1.5 shadow-soft backdrop-blur-xl">
+          {tabs.map(({ href, label, Icon, match }) => {
+            const active = match(pathname);
+            return (
+              <li key={href} className="flex-1">
+                <Link
+                  href={href}
+                  className={cn(
+                    "flex flex-col items-center justify-center gap-0.5 rounded-full py-1.5 transition",
+                    active
+                      ? "bg-gradient-primary text-white shadow-glow"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  <Icon className={cn("h-5 w-5", active && "drop-shadow")} />
+                  <span className="text-[10px] font-semibold">{label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </nav>
   );
 }

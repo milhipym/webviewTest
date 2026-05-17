@@ -3,9 +3,10 @@ import { DateHeader } from "@/components/shell/DateHeader";
 import { Timeline } from "@/components/timeline/Timeline";
 import { ActiveTimerBanner } from "@/components/timer/ActiveTimerBanner";
 import { QuickFab } from "@/components/quick/QuickFab";
+import { BabyHeroCard } from "@/components/shell/BabyHeroCard";
 import { getActiveRecords, getBaby, getRecordsByDay } from "@/lib/records/queries";
-import { ageLabel } from "@/lib/time/format";
 import { parseDateParam } from "@/lib/time/dayWindow";
+import { computeDailySummary } from "@/lib/records/summary";
 
 export const dynamic = "force-dynamic";
 
@@ -19,15 +20,25 @@ export default async function DayPage({ params }: { params: Promise<{ date: stri
     getRecordsByDay(baby.id, dateObj),
     getActiveRecords(baby.id),
   ]);
+  const summary = computeDailySummary(records);
 
   return (
-    <>
-      <DateHeader dateIso={date} babyName={baby.name} babyAge={ageLabel(baby.birthdate, dateObj)} />
+    <div className="min-h-dvh bg-mesh">
+      <DateHeader dateIso={date} />
       <ActiveTimerBanner babyId={baby.id} initial={active} />
-      <div className="mt-2">
-        <Timeline babyId={baby.id} dateIso={date} initial={records} />
+      <div className="px-4 pt-2">
+        <BabyHeroCard baby={baby} summary={summary} lastFeeding={null} />
       </div>
+      <div className="mt-4 px-3">
+        <div className="rounded-3xl bg-card/70 shadow-card backdrop-blur">
+          <div className="border-b border-border/50 px-4 py-3">
+            <h2 className="text-sm font-bold tracking-tight">기록</h2>
+          </div>
+          <Timeline babyId={baby.id} dateIso={date} initial={records} />
+        </div>
+      </div>
+      <div className="h-24" />
       <QuickFab babyId={baby.id} />
-    </>
+    </div>
   );
 }

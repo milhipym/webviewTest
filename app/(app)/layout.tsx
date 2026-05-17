@@ -13,9 +13,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <BabyProvider baby={baby}>
-      <div className="mx-auto flex min-h-dvh max-w-md flex-col bg-background pb-16">
-        {children}
-      </div>
+      <div className="mx-auto max-w-md">{children}</div>
       <BottomNav />
     </BabyProvider>
   );

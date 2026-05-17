@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Moon, Baby as BabyIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { fmtDurationHMS } from "@/lib/time/format";
 import { getBrowserSupabase } from "@/lib/supabase/client";
@@ -66,20 +65,22 @@ export function ActiveTimerBanner({
   if (active.length === 0) return null;
 
   return (
-    <div className="space-y-2 px-4 pt-3">
+    <div className="space-y-2 px-4 pt-2">
       {active.map((r) => {
         const elapsed = (Date.now() - new Date(r.started_at).getTime()) / 1000;
-        const Icon = r.type === "sleep" ? Moon : BabyIcon;
+        const emoji = r.type === "sleep" ? "😴" : "🤱";
         const label = r.type === "sleep" ? "수면 진행중" : "모유 수유중";
         return (
           <div
             key={r.id}
-            className="flex items-center gap-3 rounded-xl border border-primary/30 bg-primary/5 px-3 py-2"
+            className="flex items-center gap-3 rounded-2xl bg-gradient-warm p-3 shadow-soft"
           >
-            <Icon className="h-5 w-5 text-primary" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/70 text-2xl shadow-card">
+              {emoji}
+            </div>
             <div className="flex-1">
-              <p className="text-sm font-medium">{label}</p>
-              <p className="text-xs tabular-nums text-muted-foreground">
+              <p className="text-xs font-semibold text-rose-900/70">{label}</p>
+              <p className="font-mono text-lg font-extrabold tabular-nums text-rose-900">
                 {fmtDurationHMS(elapsed)}
               </p>
             </div>
@@ -88,7 +89,7 @@ export function ActiveTimerBanner({
               onClick={async () => {
                 try {
                   await endActiveTimer(r.id);
-                  toast.success("종료했습니다");
+                  toast.success("종료했어요");
                 } catch {
                   toast.error("종료 실패");
                 }

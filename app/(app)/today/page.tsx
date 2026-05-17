@@ -4,9 +4,10 @@ import { Timeline } from "@/components/timeline/Timeline";
 import { ActiveTimerBanner } from "@/components/timer/ActiveTimerBanner";
 import { LastFeedingBadge } from "@/components/timeline/LastFeedingBadge";
 import { QuickFab } from "@/components/quick/QuickFab";
+import { BabyHeroCard } from "@/components/shell/BabyHeroCard";
 import { getActiveRecords, getBaby, getLastFeeding, getRecordsByDay } from "@/lib/records/queries";
-import { ageLabel } from "@/lib/time/format";
 import { todayIso } from "@/lib/time/dayWindow";
+import { computeDailySummary } from "@/lib/records/summary";
 
 export const dynamic = "force-dynamic";
 
@@ -20,18 +21,26 @@ export default async function TodayPage() {
     getActiveRecords(baby.id),
     getLastFeeding(baby.id),
   ]);
+  const summary = computeDailySummary(records);
 
   return (
-    <>
-      <DateHeader dateIso={dateIso} babyName={baby.name} babyAge={ageLabel(baby.birthdate)} />
+    <div className="min-h-dvh bg-mesh">
+      <DateHeader dateIso={dateIso} />
       <ActiveTimerBanner babyId={baby.id} initial={active} />
-      <div className="px-4 pt-3">
-        <LastFeedingBadge lastFeeding={lastFeeding} />
+      <div className="px-4 pt-2">
+        <BabyHeroCard baby={baby} summary={summary} lastFeeding={lastFeeding} />
       </div>
-      <div className="mt-2">
-        <Timeline babyId={baby.id} dateIso={dateIso} initial={records} />
+      <div className="mt-4 px-3">
+        <div className="rounded-3xl bg-card/70 shadow-card backdrop-blur">
+          <div className="border-b border-border/50 px-4 py-3">
+            <h2 className="text-sm font-bold tracking-tight">오늘의 기록</h2>
+            <LastFeedingBadge lastFeeding={lastFeeding} />
+          </div>
+          <Timeline babyId={baby.id} dateIso={dateIso} initial={records} />
+        </div>
       </div>
+      <div className="h-24" />
       <QuickFab babyId={baby.id} />
-    </>
+    </div>
   );
 }

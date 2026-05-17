@@ -10,12 +10,14 @@ export default async function DiaryPage() {
   const photos = await getPhotos(baby.id);
 
   return (
-    <>
-      <header className="sticky top-0 z-20 border-b border-border bg-background/95 px-4 py-3 safe-top">
-        <h1 className="text-lg font-semibold">사진 일기</h1>
-        <p className="text-xs text-muted-foreground">{baby.name}</p>
+    <div className="min-h-dvh bg-mesh pb-28">
+      <header className="sticky top-0 z-20 glass border-b border-border/50 safe-top">
+        <div className="px-5 py-4">
+          <h1 className="text-xl font-extrabold tracking-tight">사진 일기</h1>
+          <p className="text-xs text-muted-foreground">📸 {baby.name}의 순간들</p>
+        </div>
       </header>
       <PhotoGrid photos={photos} />
-    </>
+    </div>
   );
 }

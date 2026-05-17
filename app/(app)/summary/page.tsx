@@ -30,10 +30,12 @@ export default async function SummaryPage() {
   const weekly = computeWeeklySeries(weekRecords, weekStart);
 
   return (
-    <>
-      <header className="sticky top-0 z-20 border-b border-border bg-background/95 px-4 py-3 safe-top">
-        <h1 className="text-lg font-semibold">요약</h1>
-        <p className="text-xs text-muted-foreground">{fmtDateKorean(today)}</p>
+    <div className="min-h-dvh bg-mesh pb-28">
+      <header className="sticky top-0 z-20 glass border-b border-border/50 safe-top">
+        <div className="px-5 py-4">
+          <h1 className="text-xl font-extrabold tracking-tight">요약</h1>
+          <p className="text-xs text-muted-foreground">📅 {fmtDateKorean(today)}</p>
+        </div>
       </header>
       <Tabs defaultValue="daily" className="px-4 pt-3">
         <TabsList>
@@ -53,6 +55,6 @@ export default async function SummaryPage() {
           </div>
         </TabsContent>
       </Tabs>
-    </>
+    </div>
   );
 }

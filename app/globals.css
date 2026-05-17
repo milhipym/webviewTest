@@ -4,44 +4,45 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 4%;
+    /* Cream + warm pink palette */
+    --background: 25 100% 98%;          /* warm cream #FFFAF5 */
+    --foreground: 340 25% 18%;          /* deep mauve text */
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 4%;
-    --primary: 340 82% 65%;
+    --card-foreground: 340 25% 18%;
+    --primary: 350 100% 78%;            /* soft rose #FFA5BB */
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 240 6% 10%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 240 4% 46%;
-    --accent: 220 14% 96%;
-    --accent-foreground: 240 6% 10%;
-    --destructive: 0 84% 60%;
+    --secondary: 24 100% 95%;           /* peach 50 */
+    --secondary-foreground: 340 20% 25%;
+    --muted: 24 50% 96%;
+    --muted-foreground: 340 8% 50%;
+    --accent: 350 100% 95%;
+    --accent-foreground: 350 50% 30%;
+    --destructive: 0 80% 65%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 340 82% 65%;
-    --radius: 0.75rem;
+    --border: 25 60% 92%;
+    --input: 25 60% 92%;
+    --ring: 350 100% 78%;
+    --radius: 1rem;                     /* 16px base — softer rounded */
   }
 
   .dark {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
-    --card: 240 6% 10%;
-    --card-foreground: 0 0% 98%;
-    --primary: 340 82% 65%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 4% 16%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 4% 16%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 240 4% 16%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 63% 50%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 4% 16%;
-    --input: 240 4% 16%;
-    --ring: 340 82% 65%;
+    --background: 340 18% 10%;
+    --foreground: 25 30% 95%;
+    --card: 340 15% 14%;
+    --card-foreground: 25 30% 95%;
+    --primary: 350 90% 72%;
+    --primary-foreground: 340 20% 12%;
+    --secondary: 340 12% 18%;
+    --secondary-foreground: 25 30% 95%;
+    --muted: 340 12% 18%;
+    --muted-foreground: 25 8% 65%;
+    --accent: 340 15% 22%;
+    --accent-foreground: 25 30% 95%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 340 12% 22%;
+    --input: 340 12% 22%;
+    --ring: 350 90% 72%;
   }
 
   * {
@@ -58,6 +59,8 @@
     color: hsl(var(--foreground));
     font-family: Pretendard, system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
     -webkit-tap-highlight-color: transparent;
+    font-feature-settings: "ss01", "ss02";
+    letter-spacing: -0.01em;
   }
 
   button {
@@ -66,22 +69,46 @@
   }
 
   input, textarea, select {
-    font-size: 16px; /* prevent iOS auto-zoom */
+    font-size: 16px;
+  }
+
+  /* Gentle scroll */
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 @layer utilities {
-  .safe-top {
-    padding-top: env(safe-area-inset-top);
+  .safe-top { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Soft pastel mesh background */
+  .bg-mesh {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(at 15% 8%, rgb(255 212 184 / 0.5) 0px, transparent 45%),
+      radial-gradient(at 85% 25%, rgb(255 196 210 / 0.5) 0px, transparent 45%),
+      radial-gradient(at 25% 88%, rgb(232 223 255 / 0.4) 0px, transparent 45%);
   }
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
+  .dark .bg-mesh {
+    background-image:
+      radial-gradient(at 15% 8%, rgb(255 138 158 / 0.12) 0px, transparent 45%),
+      radial-gradient(at 85% 25%, rgb(197 162 255 / 0.12) 0px, transparent 45%),
+      radial-gradient(at 25% 88%, rgb(255 165 113 / 0.08) 0px, transparent 45%);
   }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
+
+  /* Soft frosted-glass card */
+  .glass {
+    background: rgb(255 255 255 / 0.7);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
   }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  .dark .glass {
+    background: rgb(40 30 36 / 0.7);
   }
+
+  .text-balance { text-wrap: balance; }
 }
